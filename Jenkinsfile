@@ -79,7 +79,6 @@ pipeline {
                 bat 'git config user.email "bhavik@example.com"'
                 bat 'git config user.name "Bhavik Talwar"'
                 bat 'git tag v1.%BUILD_NUMBER%'
-                bat 'git push origin v1.%BUILD_NUMBER%'
 
                 echo 'Tagging Docker image for production...'
                 bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% %IMAGE_NAME%:prod'
