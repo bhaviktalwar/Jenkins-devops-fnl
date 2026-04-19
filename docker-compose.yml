@@ -3,7 +3,7 @@ services:
     image: task-management-app:latest
     container_name: task-app
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - NODE_ENV=production
     restart: always
