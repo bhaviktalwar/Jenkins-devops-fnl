@@ -85,8 +85,8 @@ pipeline {
                 bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% %IMAGE_NAME%:prod'
 
                 echo 'Deploying to production...'
-                bat 'docker stop task-app || exit 0'
-                bat 'docker run -d -p 3000:3000 -e NODE_ENV=production %IMAGE_NAME%:prod'
+                bat 'docker rm -f prod-app || exit 0'
+                bat 'docker run -d --name prod-app -p 3000:3000 -e NODE_ENV=production %IMAGE_NAME%:prod'
             }
         }
 
@@ -120,8 +120,8 @@ pipeline {
         failure {
             echo 'Pipeline failed! Initiating rollback...'
 
-            bat 'docker stop task-app || exit 0'
-            bat 'docker run -d -p 3000:3000 task-management-app:latest'
+            bat 'docker rm -f prod-app || exit 0'
+            bat 'docker run -d --name prod-app -p 3000:3000 task-management-app:latest'
         }
     }
 }
