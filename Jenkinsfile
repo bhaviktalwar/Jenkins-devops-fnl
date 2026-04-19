@@ -9,7 +9,7 @@ pipeline {
     stages {
 
         // 🔹 1. BUILD + ARTIFACT
-        stage('Build & Artifact Creation') {
+        stage('Build') {
             steps {
                 echo 'Installing dependencies...'
                 bat 'npm install'
@@ -46,16 +46,17 @@ pipeline {
 
         // 🔹 4. SECURITY (ADVANCED)
         stage('Security') {
-            steps {
-                echo 'Running security scan...'
+    steps {
+        echo 'Running dependency scan...'
+        bat 'npm audit --audit-level=high'
 
-                bat 'npm audit --json > audit-report.json'
-                bat 'npm audit --audit-level=high'
+        echo 'Running container scan...'
+        bat 'C:\\trivy\\trivy.exe image task-management-app:latest --severity HIGH,CRITICAL'
 
-                echo 'Attempting auto-fix...'
-                bat 'npm audit fix || exit 0'
-            }
-        }
+        echo 'Generating report...'
+        bat 'npm audit --json > security-report.json'
+    }
+}
 
         // 🔹 5. DEPLOY (STAGING - INFRA AS CODE)
         stage('Deploy (Staging)') {
