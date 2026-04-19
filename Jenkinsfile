@@ -51,7 +51,7 @@ pipeline {
         bat 'npm audit --audit-level=high'
 
         echo 'Running container scan...'
-        bat 'C:\\trivy\\trivy.exe image task-management-app:latest --severity HIGH,CRITICAL'
+        bat 'D:\\trivy\\trivy.exe image task-management-app:latest --severity HIGH,CRITICAL'
 
         echo 'Generating report...'
         bat 'npm audit --json > security-report.json'
