@@ -1,5 +1,4 @@
 node_modules
 app.tar
-*.json
 .git
 coverage
